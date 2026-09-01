@@ -298,3 +298,8 @@ appears anywhere in `summary`, `search_results`, or `topic`, and exactly 8 messa
 | Restart or exit after the grade | `ask_next_action` → `reset_state` \| `end_session` |
 | State reset on restart | Reset mechanics, LLD §7; verified V9/V10 |
 | Whole workflow executes | Verified V6 |
+
+---
+
+*See [HLD.md](HLD.md) for architecture, data flow, technology rationale, design decisions and known
+limitations. Back to the [project README](../README.md).*

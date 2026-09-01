@@ -230,4 +230,4 @@ material rather than live search.
 ---
 
 *See [LLD.md](LLD.md) for state schema, per-node contracts, routing tables, prompt specifications
-and message lifecycle.*
+and message lifecycle. Back to the [project README](../README.md).*
