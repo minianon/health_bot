@@ -42,7 +42,7 @@ graph LR
     P["Patient"] <--> NB["HealthBot notebook"]
     NB -->|"search query"| TV["Tavily Search API"]
     TV -->|"passages + source URLs"| NB
-    NB -->|"prompts"| LLM["Chat model<br/>(openai/gpt-oss-120b on Groq)"]
+    NB -->|"prompts"| LLM["OpenAI chat model<br/>(gpt-4o-mini)"]
     LLM -->|"tool call / prose"| NB
     TV -.->|"restricted to"| MED["Mayo Clinic, MedlinePlus, NIH,<br/>CDC, WHO, Cleveland Clinic,<br/>Johns Hopkins, NHS, Healthline"]
 ```
@@ -137,7 +137,7 @@ told them, because the grader cannot see anything the summary does not contain.
 | --- | --- |
 | **LangGraph** | The workflow is a fixed sequence with a loop and two branches — a declarative state machine models it directly. State is explicit and inspectable, which makes the privacy reset provable rather than assumed. |
 | **Tavily** (LangChain community tool) | Purpose-built search-for-LLMs API returning clean passage text plus source URLs. `include_domains` gives hard editorial control over what can be retrieved. |
-| **`openai/gpt-oss-120b` on Groq** | Reliable tool calling and clean prose at low latency. Free tier removes cost as a barrier for a prototype. Provider-swappable — see §9. |
+| **OpenAI `gpt-4o-mini`** | Reliable tool calling and clean prose at low cost and latency. Provider-swappable — see §9. |
 | **Jupyter notebook** | Mandated by the brief. `input()` / `print()` give a zero-infrastructure conversational surface, and the saved notebook doubles as an execution record. |
 | **`temperature=0`** | Summaries and grades should be reproducible. Creative variation is a liability in patient education. |
 
@@ -176,8 +176,7 @@ data leaving the machine is the topic string (to Tavily) and the retrieved passa
 answer (to the model provider) — a real deployment would need a BAA or self-hosted inference before
 handling identifiable information.
 
-**Cost and latency.** Four model calls and one search per topic. On the free tiers of both providers
-a full topic costs nothing and completes in roughly 10–20 seconds, dominated by Tavily's `advanced`
+**Cost and latency.** Four model calls and one search per topic. A full topic costs a fraction of a cent and completes in roughly 10–20 seconds, dominated by Tavily's `advanced`
 search depth and summary generation.
 
 **Reliability.** Both providers enforce rate limits. Normal interactive use stays far below them; a
@@ -197,12 +196,12 @@ provider-independent.
 
 ```python
 # Current
-from langchain_groq import ChatGroq
-llm = ChatGroq(model="openai/gpt-oss-120b", temperature=0)
-
-# OpenAI API
 from langchain_openai import ChatOpenAI
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+
+# Any other provider, e.g. Groq
+from langchain_groq import ChatGroq
+llm = ChatGroq(model="openai/gpt-oss-120b", temperature=0)
 ```
 
 Any substitute must support tool calling, or decision D1 breaks.

@@ -158,7 +158,7 @@ stateDiagram-v2
 
 The `collect_results` fallback on `route_after_agent` is a safety net: if the model answers in prose
 instead of calling the tool, the graph still advances (with empty search results) rather than
-hanging. With `gpt-oss-120b` and the search system prompt, the tool branch is taken every time in
+hanging. With `gpt-4o-mini` and the search system prompt, the tool branch is taken every time in
 testing.
 
 ## 5. Prompt specifications
@@ -241,7 +241,7 @@ appears anywhere in `summary`, `search_results`, or `topic`, and exactly 8 messa
 | `include_answer` | `False` | Tavily's own synthesis would bypass our summarization prompt |
 | `include_raw_content` | `False` | Full page HTML adds noise and tokens |
 | `include_domains` | 9 medical publishers | Structural editorial control (HLD D2) |
-| `CHAT_MODEL` | `openai/gpt-oss-120b` | Reliable tool calling + clean prose on Groq's free tier |
+| `CHAT_MODEL` | `gpt-4o-mini` | Reliable tool calling and clean prose at low cost |
 | `temperature` | `0` | Reproducible summaries and grades |
 | `recursion_limit` | `250` | ~14 nodes per topic; supports ~17 topics in one session |
 
@@ -264,7 +264,7 @@ appears anywhere in `summary`, `search_results`, or `topic`, and exactly 8 messa
 
 | # | Check | Method | Result |
 | --- | --- | --- | --- |
-| V1 | Both API keys authenticate | Live calls to Tavily and Groq | Pass |
+| V1 | Both API keys authenticate | Live calls to Tavily and OpenAI | Pass |
 | V2 | Model emits a Tavily tool call | Inspect `AIMessage.tool_calls` | Pass |
 | V3 | Graph compiles with all nodes | `get_graph()` node census | Pass — 17 incl. START/END |
 | V4 | `collect_results` parses and orders passages | Synthetic `ToolMessage` fixture | Pass |

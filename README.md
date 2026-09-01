@@ -142,13 +142,11 @@ uv pip install -r requirements.txt
 Copy [`config.env.example`](config.env.example) to `config.env` and fill in both values:
 
 ```env
-GROQ_API_KEY="gsk_your_key_here"
-TAVILY_API_KEY="tvly_your_key_here"
+OPENAI_API_KEY="sk-your_key_here"
+TAVILY_API_KEY="tvly-your_key_here"
 ```
 
-Both are free, and neither needs a credit card:
-
-- **Groq** — https://console.groq.com/keys
+- **OpenAI** — https://platform.openai.com/api-keys
 - **Tavily** — https://app.tavily.com/home (first 1000 searches free)
 
 ### 3. Run it
@@ -208,20 +206,9 @@ Full detail lives in [`docs/LLD.md`](docs/LLD.md).
 | --- | --- | --- |
 | Orchestration | **LangGraph** | The workflow is a fixed sequence with one loop and two branches. A declarative state machine models that directly, and makes state inspectable |
 | Search | **Tavily** (LangChain community tool) | Built for LLM retrieval — returns clean passage text plus source URLs, and `include_domains` gives hard editorial control |
-| Chat model | **`openai/gpt-oss-120b`** on Groq | Reliable tool calling and clean prose, on a free tier. See the note below |
+| Chat model | **OpenAI `gpt-4o-mini`** | Reliable tool calling and clean prose at low cost. A full topic runs for a fraction of a cent |
 | Interface | **Jupyter notebook** | Required by the brief. `input()` / `print()` need zero infrastructure, and the saved notebook doubles as a record of the session |
 | Temperature | **0** | Summaries and grades should be reproducible. Creative variation is a liability in patient education |
-
-> **Note on the model provider.** The original brief specifies the OpenAI API. This build runs
-> OpenAI's open-weight model `openai/gpt-oss-120b` on **Groq** inference, because Groq's free tier
-> needs no billing setup. Nothing else changes — the model still calls the Tavily tool through
-> `bind_tools`, and the graph, state and prompts are provider-independent. To move to the OpenAI
-> API, change two lines in notebook section 2:
->
-> ```python
-> from langchain_openai import ChatOpenAI
-> llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
-> ```
 
 ## Design decisions
 
