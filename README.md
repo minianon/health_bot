@@ -10,8 +10,11 @@ between topics for privacy.
 | File | Purpose |
 | --- | --- |
 | `HealthBot.ipynb` | The project notebook — graph, nodes, edges, prompts, and the run cell |
+| `docs/HLD.md` | High Level Design — architecture, data flow, design decisions, limitations |
+| `docs/LLD.md` | Low Level Design — state schema, node contracts, routing, prompts, verification |
 | `requirements.txt` | Pinned dependency list |
-| `config.env` | **Put your API keys here** (git-ignored) |
+| `config.env.example` | Template — copy to `config.env` and add your keys |
+| `config.env` | **Your API keys** (git-ignored, never committed) |
 
 ## Setup
 
